@@ -11,13 +11,16 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @Composable
-fun MainApp(viewModel: ListViewModel, detailViewModelFactory: DetailViewModelFactory) {
+fun MainApp(
+    listViewModel: ListViewModel,
+    detailViewModelFactory: DetailViewModelFactory
+) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "list") {
         composable("list") {
-            viewModel.load()
+            listViewModel.load()
             ListScreen(
-                viewModel = viewModel,
+                viewModel = listViewModel,
                 navigateToDetail = { id -> navController.navigate("detail/$id") }
             )
         }
@@ -29,7 +32,9 @@ fun MainApp(viewModel: ListViewModel, detailViewModelFactory: DetailViewModelFac
             )
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getString("recipeId").orEmpty()
-            DetailScreen(detailViewModelFactory.build(id))
+            val viewModel = detailViewModelFactory.build(id)
+            viewModel.load()
+            DetailScreen(viewModel)
         }
     }
 }
