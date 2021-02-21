@@ -7,9 +7,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigolessinger.thefoodapp.data.model.Recipe
 
 @Composable
-fun SuccessScreen(recipes: List<Recipe>) {
+fun SuccessScreen(recipes: List<Recipe>, navigateToDetail: (String) -> Unit) {
     LazyColumn {
-        items(recipes) { RecipeCard(it) }
+        items(recipes) { RecipeCard(it, navigateToDetail) }
     }
 }
 
@@ -35,5 +35,5 @@ fun SuccessScreenPreview() {
                 instructions = ""
             ),
         )
-    )
+    ) {}
 }

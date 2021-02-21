@@ -10,9 +10,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @Composable
-fun ListScreen(viewModel: ListViewModel) {
+fun ListScreen(viewModel: ListViewModel, navigateToDetail: (String) -> Unit) {
     when (val uiState = viewModel.uiState.collectAsState().value) {
-        is ListUiState.Success -> SuccessScreen(uiState.recipes)
+        is ListUiState.Success -> SuccessScreen(uiState.recipes, navigateToDetail)
         is ListUiState.Error -> ErrorScreen(onRetry = viewModel::retry)
         is ListUiState.Loading -> LoadingScreen()
     }

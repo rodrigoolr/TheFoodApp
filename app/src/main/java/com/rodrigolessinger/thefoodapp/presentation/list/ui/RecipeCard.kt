@@ -1,16 +1,18 @@
 package com.rodrigolessinger.thefoodapp.presentation.list.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigolessinger.thefoodapp.data.model.Recipe
 import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
-fun RecipeCard(recipe: Recipe) {
-    Card {
+fun RecipeCard(recipe: Recipe, navigateToDetail: (String) -> Unit) {
+    Card(modifier = Modifier.clickable { navigateToDetail(recipe.id) }) {
         Column {
             CoilImage(data = recipe.thumbnail, contentDescription = "")
             Text(text = recipe.description)
@@ -31,5 +33,5 @@ fun RecipeCardPreview() {
             ingredients = listOf(),
             instructions = ""
         )
-    )
+    ) {}
 }
