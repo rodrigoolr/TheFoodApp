@@ -15,6 +15,7 @@ fun MainApp(viewModel: ListViewModel, detailViewModelFactory: DetailViewModelFac
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "list") {
         composable("list") {
+            viewModel.load()
             ListScreen(
                 viewModel = viewModel,
                 navigateToDetail = { id -> navController.navigate("detail/$id") }
