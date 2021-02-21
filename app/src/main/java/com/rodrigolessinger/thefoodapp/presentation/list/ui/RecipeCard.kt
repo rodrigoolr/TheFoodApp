@@ -11,8 +11,12 @@ import com.rodrigolessinger.thefoodapp.data.model.Recipe
 import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
-fun RecipeCard(recipe: Recipe, navigateToDetail: (String) -> Unit) {
-    Card(modifier = Modifier.clickable { navigateToDetail(recipe.id) }) {
+fun RecipeCard(
+    recipe: Recipe,
+    modifier: Modifier = Modifier,
+    navigateToDetail: (String) -> Unit
+) {
+    Card(modifier = modifier.clickable { navigateToDetail(recipe.id) }) {
         Column {
             CoilImage(data = recipe.thumbnail, contentDescription = "")
             Text(text = recipe.description)
