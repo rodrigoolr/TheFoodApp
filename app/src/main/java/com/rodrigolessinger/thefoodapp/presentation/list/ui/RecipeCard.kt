@@ -24,9 +24,12 @@ fun RecipeCard(recipe: Recipe) {
 fun RecipeCardPreview() {
     RecipeCard(
         Recipe(
+            id = "123",
             name = "Delicious Meal",
             description = "Meal Description",
-            thumbnail = "url.to.image"
+            thumbnail = "url.to.image",
+            ingredients = listOf(),
+            instructions = ""
         )
     )
 }

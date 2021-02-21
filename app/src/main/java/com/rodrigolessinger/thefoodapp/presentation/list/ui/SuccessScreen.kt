@@ -19,14 +19,20 @@ fun SuccessScreenPreview() {
     SuccessScreen(
         listOf(
             Recipe(
+                id = "123",
                 name = "Delicious Meal",
                 description = "From the World",
-                thumbnail = "url.to.image"
+                thumbnail = "url.to.image",
+                ingredients = listOf(),
+                instructions = ""
             ),
             Recipe(
+                id = "456",
                 name = "Not so great meal",
                 description = "From Somewhere",
-                thumbnail = "other.image"
+                thumbnail = "other.image",
+                ingredients = listOf(),
+                instructions = ""
             ),
         )
     )
