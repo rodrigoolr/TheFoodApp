@@ -1,21 +1,21 @@
-package com.rodrigolessinger.thefoodapp.presentation.list
+package com.rodrigolessinger.thefoodapp.presentation
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.rodrigolessinger.thefoodapp.presentation.list.ui.ListScreen
+import com.rodrigolessinger.thefoodapp.presentation.list.ListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.android.inject
 
-class ListActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    private val viewModel: ListViewModel by inject()
+    private val listViewModel: ListViewModel by inject()
 
     @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ListScreen(viewModel)
+            MainApp(listViewModel)
         }
     }
 }
