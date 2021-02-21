@@ -1,4 +1,4 @@
-package com.rodrigolessinger.thefoodapp.presentation.list.ui
+package com.rodrigolessinger.thefoodapp.presentation.common
 
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
