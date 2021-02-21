@@ -80,12 +80,10 @@ dependencies {
     implementation "androidx.compose.material:material:$jetpack_compose_version"
     implementation "androidx.compose.material:material-icons-core:$jetpack_compose_version"
     implementation "androidx.compose.material:material-icons-extended:$jetpack_compose_version"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$jetpack_compose_version"
 
     testImplementation 'junit:junit:4.13.2'
 
-    testImplementation 'org.mockito:mockito-core:2.25.0'
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    testImplementation "io.mockk:mockk:1.10.6"
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

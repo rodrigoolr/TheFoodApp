@@ -1,10 +1,9 @@
 package com.rodrigolessinger.thefoodapp.data
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import com.rodrigolessinger.thefoodapp.helper.MockRecipe
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
@@ -14,26 +13,26 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class RecipeRepositoryTest {
 
-    private val provider = mock<RecipeProvider>()
+    private val provider = mockk<RecipeProvider>()
     private val repository = RecipeRepository(provider)
 
     @Test(expected = IllegalStateException::class)
     fun `when provider returns error, getRecipeList throws exception`() = runBlockingTest {
-        whenever(provider.getRecipeList()).thenThrow(IllegalStateException())
+        coEvery { provider.getRecipeList() } throws IllegalStateException()
         repository.getRecipeList()
     }
 
     @Test
     fun `when provider returns model, getRecipeList returns model`() = runBlockingTest {
         val recipeList = MockRecipe.defaultRecipeList
-        whenever(provider.getRecipeList()).thenReturn(recipeList)
+        coEvery { provider.getRecipeList() } returns recipeList
         assertEquals(repository.getRecipeList(), recipeList)
     }
 
     @Test
     fun `when local cache is empty, getRecipe fetches list and returns model`() = runBlockingTest {
         val recipeList = MockRecipe.defaultRecipeList
-        whenever(provider.getRecipeList()).thenReturn(recipeList)
+        coEvery { provider.getRecipeList() } returns recipeList
 
         assertEquals(repository.getRecipe(recipeList[0].id), recipeList[0])
     }
@@ -41,7 +40,7 @@ class RecipeRepositoryTest {
     @Test(expected = IllegalArgumentException::class)
     fun `when local cache is empty and provider returns error, getRecipe throws exception`() =
         runBlockingTest {
-            whenever(provider.getRecipeList()).thenThrow(IllegalArgumentException())
+            coEvery { provider.getRecipeList() } throws IllegalArgumentException()
             repository.getRecipeList()
         }
 
@@ -49,12 +48,12 @@ class RecipeRepositoryTest {
     fun `when getRecipeList is called first, getRecipe returns model immediately`() =
         runBlockingTest {
             val recipeList = MockRecipe.defaultRecipeList
-            whenever(provider.getRecipeList()).thenReturn(recipeList)
+            coEvery { provider.getRecipeList() } returns recipeList
 
             assertEquals(repository.getRecipeList(), recipeList)
             assertEquals(repository.getRecipe(recipeList[0].id), recipeList[0])
 
-            verify(provider).getRecipeList()
+            coVerify(exactly = 1) { provider.getRecipeList() }
         }
 
     @Test
@@ -66,7 +65,7 @@ class RecipeRepositoryTest {
             MockRecipe.defaultRecipe.copy(id = "3", thumbnail = "http://other.image"),
             MockRecipe.defaultRecipe.copy(id = "4", ingredients = listOf()),
         )
-        whenever(provider.getRecipeList()).thenReturn(recipeList)
+        coEvery { provider.getRecipeList() } returns recipeList
 
         assertEquals(repository.getRecipeList(), recipeList)
         assertEquals(repository.getRecipe("3"), recipeList[3])
@@ -76,7 +75,7 @@ class RecipeRepositoryTest {
         assertEquals(repository.getRecipe("4"), recipeList[4])
         assertEquals(repository.getRecipe("1"), recipeList[1])
 
-        verify(provider).getRecipeList()
+        coVerify(exactly = 1) { provider.getRecipeList() }
     }
 
     @Test
@@ -87,13 +86,13 @@ class RecipeRepositoryTest {
             val firstList = MockRecipe.defaultRecipeList
             val secondList = listOf(recipe)
 
-            whenever(provider.getRecipeList()).thenReturn(firstList)
+            coEvery { provider.getRecipeList() } returns firstList
             assertEquals(repository.getRecipeList(), firstList)
 
-            whenever(provider.getRecipeList()).thenReturn(secondList)
+            coEvery { provider.getRecipeList() } returns secondList
             assertEquals(repository.getRecipe("7"), recipe)
 
-            verify(provider, times(2)).getRecipeList()
+            coVerify(exactly = 2) { provider.getRecipeList() }
         }
 
     @Test
@@ -102,12 +101,12 @@ class RecipeRepositoryTest {
             val firstList = MockRecipe.defaultRecipeList
             val secondList = listOf(MockRecipe.defaultRecipe.copy(id = "7"))
 
-            whenever(provider.getRecipeList()).thenReturn(firstList)
+            coEvery { provider.getRecipeList() } returns firstList
             assertNull(repository.getRecipe("10"))
 
-            whenever(provider.getRecipeList()).thenReturn(secondList)
+            coEvery { provider.getRecipeList() } returns secondList
             assertNull(repository.getRecipe("10"))
 
-            verify(provider, times(2)).getRecipeList()
+            coVerify(exactly = 2) { provider.getRecipeList() }
         }
 }
