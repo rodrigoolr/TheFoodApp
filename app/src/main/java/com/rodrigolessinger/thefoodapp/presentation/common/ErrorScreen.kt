@@ -2,6 +2,7 @@ package com.rodrigolessinger.thefoodapp.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -14,7 +15,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ErrorScreen(onRetry: () -> Unit) {
     Column(
-        Modifier.padding(all = 16.dp),
+        Modifier.padding(all = 16.dp).fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
