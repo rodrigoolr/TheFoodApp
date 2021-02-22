@@ -22,7 +22,7 @@ fun <T> LoadableScreen(
 @ExperimentalCoroutinesApi
 fun <T> LoadableScreen(
     viewModel: LoadableViewModel<T>,
-    composeSuccess: @Composable() (T) -> Unit
+    composeSuccess: @Composable (T) -> Unit
 ) {
     LoadableScreen(
         uiState = viewModel.uiState.collectAsState().value,
