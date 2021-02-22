@@ -13,12 +13,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rodrigolessinger.thefoodapp.data.model.Recipe
 import com.rodrigolessinger.thefoodapp.presentation.common.VerticallyExpandedRow
-import com.rodrigolessinger.thefoodapp.presentation.list.logic.GridBuilder
+import com.rodrigolessinger.thefoodapp.logic.buildGrid
 
 @Composable
 fun ListScreen(
     recipes: List<Recipe>,
-    gridBuilder: GridBuilder = GridBuilder(),
     itemPadding: Dp = 8.dp,
     minimumColumnWidth: Dp = 150.dp,
     navigateToDetail: (String) -> Unit
@@ -26,7 +25,7 @@ fun ListScreen(
     BoxWithConstraints(modifier = Modifier.padding(all = itemPadding)) {
         val numberOfColumns = (maxWidth / minimumColumnWidth).toInt()
         val columnWidth = (maxWidth / numberOfColumns) - itemPadding
-        val grid = remember(maxWidth) { gridBuilder.build(recipes, numberOfColumns) }
+        val grid = remember(maxWidth) { recipes.buildGrid(numberOfColumns) }
 
         LazyColumn(verticalArrangement = Arrangement.spacedBy(itemPadding)) {
             items(grid) { row ->
