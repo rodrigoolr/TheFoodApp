@@ -33,6 +33,7 @@ fun RecipeCard(
                 contentDescription = "",
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier.height(imageHeight),
+                fadeIn = true,
                 loading = {
                     Box(Modifier.matchParentSize()) {
                         CircularProgressIndicator(Modifier.align(Alignment.Center))
