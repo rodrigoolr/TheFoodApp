@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rodrigolessinger.thefoodapp.R
@@ -24,19 +25,23 @@ fun ErrorScreen(onRetry: () -> Unit) {
             val typography = MaterialTheme.typography
 
             Text(
-                text = "Oops!",
+                text = stringResource(R.string.error_screen_title),
                 style = typography.h4
             )
+
             Spacer(modifier = Modifier.height(8.dp))
+
             Text(
-                text = "There was an error loading this content",
+                text = stringResource(R.string.error_screen_message),
                 style = typography.body1
             )
+
             Spacer(modifier = Modifier.height(32.dp))
+
             IconButton(onClick = onRetry) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_retry),
-                    contentDescription = "Retry",
+                    contentDescription = stringResource(R.string.error_screen_retry_content_description),
                 )
             }
         }

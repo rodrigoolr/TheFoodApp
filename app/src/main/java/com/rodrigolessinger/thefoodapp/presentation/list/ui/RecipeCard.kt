@@ -30,7 +30,7 @@ fun RecipeCard(
         Column(modifier = Modifier.clickable { navigateToDetail(recipe.id) }) {
             CoilImage(
                 data = recipe.thumbnail,
-                contentDescription = "",
+                contentDescription = null,
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier.height(imageHeight),
                 fadeIn = true,

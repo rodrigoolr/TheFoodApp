@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">The Food App</string>
+
+    <!-- Error Screen -->
+    <string name="error_screen_title">Oops</string>
+    <string name="error_screen_message">There was an error loading this content</string>
+    <string name="error_screen_retry_content_description">Retry</string>
+
+    <!-- Recipe Screen -->
+    <string name="recipe_screen_ingredients_title">Ingredients</string>
+    <string name="recipe_screen_ingredients_ingredient">• %1s</string>
+    <string name="recipe_screen_instructions_title">Ingredients</string>
 </resources>

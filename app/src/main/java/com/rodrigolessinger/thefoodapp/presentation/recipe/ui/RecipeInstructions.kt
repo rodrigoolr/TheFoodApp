@@ -6,8 +6,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.rodrigolessinger.thefoodapp.R
 
 @Composable
 fun RecipeInstructions(instructions: String) {
@@ -15,7 +17,7 @@ fun RecipeInstructions(instructions: String) {
         val typography = MaterialTheme.typography
 
         Text(
-            text = "Instructions",
+            text = stringResource(R.string.recipe_screen_instructions_title),
             style = typography.h5
         )
         Spacer(modifier = Modifier.height(8.dp))

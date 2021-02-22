@@ -37,7 +37,7 @@ fun RecipeImage(
     ) {
         CoilImage(
             data = thumbnail,
-            contentDescription = "",
+            contentDescription = null,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier.fillMaxSize(),
         )
