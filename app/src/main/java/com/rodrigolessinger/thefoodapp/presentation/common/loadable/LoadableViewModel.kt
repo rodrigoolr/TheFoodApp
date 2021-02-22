@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 abstract class LoadableViewModel<T>(
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    loadOnInit: Boolean = true
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<LoadableUiState<T>>(Loading)
@@ -31,6 +32,10 @@ abstract class LoadableViewModel<T>(
 
     fun load() {
         performLoad()
+    }
+
+    init {
+        if (loadOnInit) load()
     }
 
     fun retry() {

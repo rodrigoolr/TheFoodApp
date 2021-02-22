@@ -9,8 +9,9 @@ import kotlinx.coroutines.Dispatchers
 class RecipeViewModel(
     private val id: String,
     private val repository: RecipeRepository,
-    dispatcher: CoroutineDispatcher = Dispatchers.Main
-) : LoadableViewModel<Recipe>(dispatcher) {
+    dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    loadOnInit: Boolean = true
+) : LoadableViewModel<Recipe>(dispatcher, loadOnInit) {
 
     class RecipeNotFoundException : Exception()
 

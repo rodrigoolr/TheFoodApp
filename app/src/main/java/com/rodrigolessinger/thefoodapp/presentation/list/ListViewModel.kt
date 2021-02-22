@@ -8,8 +8,9 @@ import kotlinx.coroutines.Dispatchers
 
 class ListViewModel(
     private val repository: RecipeRepository,
-    dispatcher: CoroutineDispatcher = Dispatchers.Main
-) : LoadableViewModel<List<Recipe>>(dispatcher) {
+    dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    loadOnInit: Boolean = true
+) : LoadableViewModel<List<Recipe>>(dispatcher, loadOnInit) {
 
     override suspend fun loadData() = repository.getRecipeList()
 }

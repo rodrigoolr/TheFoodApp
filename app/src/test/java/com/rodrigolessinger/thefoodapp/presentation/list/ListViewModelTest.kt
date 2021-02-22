@@ -1,7 +1,9 @@
 package com.rodrigolessinger.thefoodapp.presentation.list
 
+import app.cash.turbine.FlowTurbine
 import app.cash.turbine.test
 import com.rodrigolessinger.thefoodapp.data.RecipeRepository
+import com.rodrigolessinger.thefoodapp.data.model.Recipe
 import com.rodrigolessinger.thefoodapp.helper.MockRecipe
 import com.rodrigolessinger.thefoodapp.presentation.common.loadable.LoadableUiState
 import com.rodrigolessinger.thefoodapp.presentation.common.loadable.LoadableUiState.*
@@ -22,11 +24,15 @@ class ListViewModelTest {
     private val repository = mockk<RecipeRepository>()
     private val dispatcher = TestCoroutineDispatcher()
 
+    private suspend fun testUiState(validate: suspend FlowTurbine<LoadableUiState<List<Recipe>>>.(ListViewModel) -> Unit) {
+        val viewModel = ListViewModel(repository, dispatcher, loadOnInit = false)
+        viewModel.uiState.test { validate(viewModel) }
+    }
+
     @Test
     fun `before load, ui state starts as loading`() =
         dispatcher.runBlockingTest {
-            val viewModel = ListViewModel(repository, dispatcher)
-            viewModel.uiState.test {
+            testUiState {
                 assertEquals(expectItem(), Loading)
             }
 
@@ -38,8 +44,7 @@ class ListViewModelTest {
         dispatcher.runBlockingTest {
             coEvery { repository.getRecipeList() } throws Exception()
 
-            val viewModel = ListViewModel(repository, dispatcher)
-            viewModel.uiState.test {
+            testUiState { viewModel ->
                 assertEquals(expectItem(), Loading)
                 viewModel.load()
                 assertEquals(expectItem(), Error)
@@ -52,8 +57,7 @@ class ListViewModelTest {
             val recipeList = MockRecipe.defaultRecipeList
             coEvery { repository.getRecipeList() } returns recipeList
 
-            val viewModel = ListViewModel(repository, dispatcher)
-            viewModel.uiState.test {
+            testUiState { viewModel ->
                 assertEquals(expectItem(), Loading)
                 viewModel.load()
                 assertEquals(expectItem(), Success(recipeList))
@@ -65,8 +69,7 @@ class ListViewModelTest {
         dispatcher.runBlockingTest {
             coEvery { repository.getRecipeList() } throws Exception()
 
-            val viewModel = ListViewModel(repository, dispatcher)
-            viewModel.uiState.test {
+            testUiState { viewModel ->
                 assertEquals(expectItem(), Loading)
 
                 viewModel.load()
@@ -83,8 +86,7 @@ class ListViewModelTest {
         dispatcher.runBlockingTest {
             val recipeList = MockRecipe.defaultRecipeList
 
-            val viewModel = ListViewModel(repository, dispatcher)
-            viewModel.uiState.test {
+            testUiState { viewModel ->
                 assertEquals(expectItem(), Loading)
 
                 coEvery { repository.getRecipeList() } throws Exception()
