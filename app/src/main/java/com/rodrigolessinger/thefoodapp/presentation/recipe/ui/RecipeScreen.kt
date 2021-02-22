@@ -15,28 +15,34 @@ import com.rodrigolessinger.thefoodapp.data.model.Recipe
 fun RecipeScreen(recipe: Recipe) {
     BoxWithConstraints {
         val maxHeight = with(LocalDensity.current) { constraints.maxHeight.toDp() }
+        val imageHeight = maxHeight * 0.6f
 
         ConstraintLayout {
             val scrollState = rememberScrollState()
 
             RecipeImage(
                 thumbnail = recipe.thumbnail,
-                imageHeight = 300.dp,
+                imageHeight = imageHeight,
                 scrollValue = scrollState.value
             )
 
             Column(
                 modifier = Modifier.verticalScroll(scrollState)
             ) {
-                Spacer(modifier = Modifier.height(300.dp))
+                Spacer(modifier = Modifier.height(imageHeight))
+
                 Box(
                     modifier = Modifier.heightIn(min = maxHeight)
                 ) {
                     Column(modifier = Modifier.padding(all = 16.dp).fillMaxWidth()) {
                         RecipeTitle(recipe.name, recipe.description)
+
                         Spacer(modifier = Modifier.height(32.dp))
+
                         RecipeIngredients(recipe.ingredients)
+
                         Spacer(modifier = Modifier.height(32.dp))
+
                         RecipeInstructions(recipe.instructions)
                     }
                 }
