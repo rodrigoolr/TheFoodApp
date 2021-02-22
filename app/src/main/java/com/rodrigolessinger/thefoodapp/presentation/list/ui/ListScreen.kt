@@ -12,8 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rodrigolessinger.thefoodapp.data.model.Recipe
-import com.rodrigolessinger.thefoodapp.presentation.common.VerticallyExpandedRow
 import com.rodrigolessinger.thefoodapp.logic.buildGrid
+import com.rodrigolessinger.thefoodapp.presentation.custom.VerticallyExpandedRow
 
 @Composable
 fun ListScreen(

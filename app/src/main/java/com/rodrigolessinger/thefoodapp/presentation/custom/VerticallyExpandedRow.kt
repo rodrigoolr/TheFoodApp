@@ -1,4 +1,4 @@
-package com.rodrigolessinger.thefoodapp.presentation.common
+package com.rodrigolessinger.thefoodapp.presentation.custom
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
