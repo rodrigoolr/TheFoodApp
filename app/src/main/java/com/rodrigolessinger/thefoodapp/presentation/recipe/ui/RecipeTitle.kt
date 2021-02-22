@@ -1,4 +1,4 @@
-package com.rodrigolessinger.thefoodapp.presentation.detail.ui
+package com.rodrigolessinger.thefoodapp.presentation.recipe.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,4 +1,4 @@
-package com.rodrigolessinger.thefoodapp.presentation.detail.ui
+package com.rodrigolessinger.thefoodapp.presentation.recipe.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -12,7 +12,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.rodrigolessinger.thefoodapp.data.model.Recipe
 
 @Composable
-fun SuccessScreen(recipe: Recipe) {
+fun RecipeScreen(recipe: Recipe) {
     BoxWithConstraints {
         val maxHeight = with(LocalDensity.current) { constraints.maxHeight.toDp() }
 
@@ -47,8 +47,8 @@ fun SuccessScreen(recipe: Recipe) {
 
 @Preview
 @Composable
-fun DetailSuccessPreview() {
-    SuccessScreen(
+fun RecipeScreenPreview() {
+    RecipeScreen(
         Recipe(
             id = "123",
             name = "Delicious Meal",

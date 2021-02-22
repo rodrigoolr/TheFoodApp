@@ -3,6 +3,8 @@ package com.rodrigolessinger.thefoodapp.presentation.list
 import app.cash.turbine.test
 import com.rodrigolessinger.thefoodapp.data.RecipeRepository
 import com.rodrigolessinger.thefoodapp.helper.MockRecipe
+import com.rodrigolessinger.thefoodapp.presentation.common.loadable.LoadableUiState
+import com.rodrigolessinger.thefoodapp.presentation.common.loadable.LoadableUiState.*
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -25,7 +27,7 @@ class ListViewModelTest {
         dispatcher.runBlockingTest {
             val viewModel = ListViewModel(repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), ListUiState.Loading)
+                assertEquals(expectItem(), Loading)
             }
 
             coVerify(exactly = 0) { repository.getRecipeList() }
@@ -38,9 +40,9 @@ class ListViewModelTest {
 
             val viewModel = ListViewModel(repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), ListUiState.Loading)
+                assertEquals(expectItem(), Loading)
                 viewModel.load()
-                assertEquals(expectItem(), ListUiState.Error)
+                assertEquals(expectItem(), Error)
             }
         }
 
@@ -52,9 +54,9 @@ class ListViewModelTest {
 
             val viewModel = ListViewModel(repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), ListUiState.Loading)
+                assertEquals(expectItem(), Loading)
                 viewModel.load()
-                assertEquals(expectItem(), ListUiState.Success(recipeList))
+                assertEquals(expectItem(), Success(recipeList))
             }
         }
 
@@ -65,14 +67,14 @@ class ListViewModelTest {
 
             val viewModel = ListViewModel(repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), ListUiState.Loading)
+                assertEquals(expectItem(), Loading)
 
                 viewModel.load()
-                assertEquals(expectItem(), ListUiState.Error)
+                assertEquals(expectItem(), Error)
 
                 viewModel.retry()
-                assertEquals(expectItem(), ListUiState.Loading)
-                assertEquals(expectItem(), ListUiState.Error)
+                assertEquals(expectItem(), Loading)
+                assertEquals(expectItem(), Error)
             }
         }
 
@@ -83,16 +85,16 @@ class ListViewModelTest {
 
             val viewModel = ListViewModel(repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), ListUiState.Loading)
+                assertEquals(expectItem(), Loading)
 
                 coEvery { repository.getRecipeList() } throws Exception()
                 viewModel.load()
-                assertEquals(expectItem(), ListUiState.Error)
+                assertEquals(expectItem(), Error)
 
                 coEvery { repository.getRecipeList() } returns recipeList
                 viewModel.retry()
-                assertEquals(expectItem(), ListUiState.Loading)
-                assertEquals(expectItem(), ListUiState.Success(recipeList))
+                assertEquals(expectItem(), Loading)
+                assertEquals(expectItem(), Success(recipeList))
             }
         }
 }

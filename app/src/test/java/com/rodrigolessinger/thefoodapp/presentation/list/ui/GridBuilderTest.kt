@@ -1,7 +1,6 @@
 package com.rodrigolessinger.thefoodapp.presentation.list.ui
 
-import com.rodrigolessinger.thefoodapp.helper.MockRecipe
-import org.junit.Assert.assertEquals
+import com.rodrigolessinger.thefoodapp.presentation.list.logic.GridBuilder
 import org.junit.Test
 
 class GridBuilderTest {

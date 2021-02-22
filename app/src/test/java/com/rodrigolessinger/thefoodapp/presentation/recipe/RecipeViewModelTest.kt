@@ -1,8 +1,9 @@
-package com.rodrigolessinger.thefoodapp.presentation.detail
+package com.rodrigolessinger.thefoodapp.presentation.recipe
 
 import app.cash.turbine.test
 import com.rodrigolessinger.thefoodapp.data.RecipeRepository
 import com.rodrigolessinger.thefoodapp.helper.MockRecipe
+import com.rodrigolessinger.thefoodapp.presentation.common.loadable.LoadableUiState.*
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -15,7 +16,7 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalCoroutinesApi
 @ExperimentalTime
-class DetailViewModelTest {
+class RecipeViewModelTest {
 
     private val repository = mockk<RecipeRepository>()
     private val dispatcher = TestCoroutineDispatcher()
@@ -23,9 +24,9 @@ class DetailViewModelTest {
     @Test
     fun `before load, ui state starts as loading`() =
         dispatcher.runBlockingTest {
-            val viewModel = DetailViewModel("1", repository, dispatcher)
+            val viewModel = RecipeViewModel("1", repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), DetailUiState.Loading)
+                assertEquals(expectItem(), Loading)
             }
 
             coVerify(exactly = 0) { repository.getRecipe("1") }
@@ -36,11 +37,11 @@ class DetailViewModelTest {
         dispatcher.runBlockingTest {
             coEvery { repository.getRecipe("1") } throws Exception()
 
-            val viewModel = DetailViewModel("1", repository, dispatcher)
+            val viewModel = RecipeViewModel("1", repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), DetailUiState.Loading)
+                assertEquals(expectItem(), Loading)
                 viewModel.load()
-                assertEquals(expectItem(), DetailUiState.Error)
+                assertEquals(expectItem(), Error)
             }
         }
 
@@ -49,11 +50,11 @@ class DetailViewModelTest {
         dispatcher.runBlockingTest {
             coEvery { repository.getRecipe("1") } returns null
 
-            val viewModel = DetailViewModel("1", repository, dispatcher)
+            val viewModel = RecipeViewModel("1", repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), DetailUiState.Loading)
+                assertEquals(expectItem(), Loading)
                 viewModel.load()
-                assertEquals(expectItem(), DetailUiState.Error)
+                assertEquals(expectItem(), Error)
             }
         }
 
@@ -63,11 +64,11 @@ class DetailViewModelTest {
             val recipe = MockRecipe.defaultRecipe
             coEvery { repository.getRecipe("1") } returns recipe
 
-            val viewModel = DetailViewModel("1", repository, dispatcher)
+            val viewModel = RecipeViewModel("1", repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), DetailUiState.Loading)
+                assertEquals(expectItem(), Loading)
                 viewModel.load()
-                assertEquals(expectItem(), DetailUiState.Success(recipe))
+                assertEquals(expectItem(), Success(recipe))
             }
         }
 
@@ -76,16 +77,16 @@ class DetailViewModelTest {
         dispatcher.runBlockingTest {
             coEvery { repository.getRecipe("1") } throws Exception()
 
-            val viewModel = DetailViewModel("1", repository, dispatcher)
+            val viewModel = RecipeViewModel("1", repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), DetailUiState.Loading)
+                assertEquals(expectItem(), Loading)
 
                 viewModel.load()
-                assertEquals(expectItem(), DetailUiState.Error)
+                assertEquals(expectItem(), Error)
 
                 viewModel.retry()
-                assertEquals(expectItem(), DetailUiState.Loading)
-                assertEquals(expectItem(), DetailUiState.Error)
+                assertEquals(expectItem(), Loading)
+                assertEquals(expectItem(), Error)
             }
         }
 
@@ -94,18 +95,18 @@ class DetailViewModelTest {
         dispatcher.runBlockingTest {
             val recipe = MockRecipe.defaultRecipe
 
-            val viewModel = DetailViewModel("1", repository, dispatcher)
+            val viewModel = RecipeViewModel("1", repository, dispatcher)
             viewModel.uiState.test {
-                assertEquals(expectItem(), DetailUiState.Loading)
+                assertEquals(expectItem(), Loading)
 
                 coEvery { repository.getRecipe("1") } throws Exception()
                 viewModel.load()
-                assertEquals(expectItem(), DetailUiState.Error)
+                assertEquals(expectItem(), Error)
 
                 coEvery { repository.getRecipe("1") } returns recipe
                 viewModel.retry()
-                assertEquals(expectItem(), DetailUiState.Loading)
-                assertEquals(expectItem(), DetailUiState.Success(recipe))
+                assertEquals(expectItem(), Loading)
+                assertEquals(expectItem(), Success(recipe))
             }
         }
 }

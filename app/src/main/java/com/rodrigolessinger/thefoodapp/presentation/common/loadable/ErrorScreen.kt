@@ -1,4 +1,4 @@
-package com.rodrigolessinger.thefoodapp.presentation.common
+package com.rodrigolessinger.thefoodapp.presentation.common.loadable
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon

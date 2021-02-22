@@ -1,4 +1,4 @@
-package com.rodrigolessinger.thefoodapp.presentation.list.ui
+package com.rodrigolessinger.thefoodapp.presentation.list.logic
 
 import com.rodrigolessinger.thefoodapp.data.model.Recipe
 

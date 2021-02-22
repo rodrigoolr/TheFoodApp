@@ -1,6 +1,6 @@
 package com.rodrigolessinger.thefoodapp.presentation
 
-import com.rodrigolessinger.thefoodapp.presentation.detail.detailActivityModule
-import com.rodrigolessinger.thefoodapp.presentation.list.listActivityModule
+import com.rodrigolessinger.thefoodapp.presentation.list.listScreenModule
+import com.rodrigolessinger.thefoodapp.presentation.recipe.recipeScreenModule
 
-val presentationModule = listOf(listActivityModule, detailActivityModule)
+val presentationModule = listScreenModule + recipeScreenModule
